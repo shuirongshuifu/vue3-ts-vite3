@@ -1,0 +1,98 @@
+<template>
+  <div class="topLevelWrap">
+    <el-menu v-bind="attrs" @open="handleOpen" @close="handleClose" @select="selectMenu">
+      <el-sub-menu :index="item.path" v-for="(item, index) in meunArr" :key="index">
+        <template #title>
+          <el-icon>
+            <setting />
+          </el-icon>
+          <span>{{ item.name }}</span>
+        </template>
+        <template v-for="ite in item.children">
+          <el-menu-item :index="ite.path">{{ ite.name }}</el-menu-item>
+        </template>
+      </el-sub-menu>
+    </el-menu>
+    <div class="mainContent">
+      <RouterView />
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+
+const attrs = {
+  activeTextColor: "#ffd04b",
+  backgroundColor: "#545c64",
+  class: "el-menu-vertical-demo",
+  defaultActive: "",
+  textColor: "#fff",
+  router: true
+}
+
+const meunArr = [
+  {
+    name: 'First',
+    path: '',
+    children: [
+      {
+        name: '表单组件封装',
+        path: '/one',
+      },
+      {
+        name: 'two',
+        path: '/two',
+      },
+      {
+        name: 'three',
+        path: '/three',
+      },
+    ]
+  },
+  {
+    name: 'Second',
+    path: '',
+    children: [
+      {
+        name: 'aaa',
+        path: '/aaa',
+      },
+      {
+        name: 'bbb',
+        path: '/bbb',
+      },
+    ]
+  },
+]
+
+// keyPath类型注解，keyPath是数组，数组中的每一项都是字符串
+const handleOpen = (key: string, keyPath: string[]) => {
+  // console.log(key, keyPath)
+}
+const handleClose = (key: string, keyPath: string[]) => {
+  // console.log(key, keyPath)
+}
+
+const selectMenu = (index: String, indexPath: String, routeResult: any) => {
+  // console.log(index, indexPath, routeResult);
+}
+
+</script>
+
+<style scoped>
+.topLevelWrap {
+  display: flex;
+}
+
+.mainContent {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.el-menu {
+  width: 200px;
+  height: 100vh;
+}
+</style>

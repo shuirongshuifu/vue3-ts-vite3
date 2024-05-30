@@ -1,12 +1,19 @@
 <template>
-    <el-input v-model.trim="form[attr.prop]" v-bind="mergeAttr" />
+    <el-input 
+        @input="(params: string | number) => { evFn(params, 'input') }" 
+        @clear="(params: string | number) => { evFn(params, 'clear') }" 
+        v-model.trim="form[attr.prop]"
+        v-bind="mergeAttr" />
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 defineOptions({
     name: 'MyInput',
 })
+
+const cb = inject('eventCallBack') as (params: { [key: string]: any }) => void;
+
 const props = defineProps({
     form: {
         type: Object,
@@ -24,4 +31,14 @@ const mergeAttr = computed(() => {
     }
     return { ...defaultAttr, ...props.attr }
 })
+
+const evFn = (val: string | number, eventName: string) => {
+    const ev = {
+        componentName: 'MyInput',
+        eventName: eventName,
+        propName: props.attr.prop,
+        propValue: val,
+    }
+    cb(ev)
+}
 </script>

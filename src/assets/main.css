@@ -10,12 +10,6 @@ span,
 applet,
 object,
 iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
 p,
 blockquote,
 pre,
@@ -25,7 +19,6 @@ acronym,
 address,
 big,
 cite,
-code,
 del,
 dfn,
 em,
@@ -49,9 +42,6 @@ center,
 dl,
 dt,
 dd,
-ol,
-ul,
-li,
 fieldset,
 form,
 label,
@@ -109,11 +99,6 @@ section {
 
 body {
   line-height: 1;
-}
-
-ol,
-ul {
-  list-style: none;
 }
 
 blockquote,

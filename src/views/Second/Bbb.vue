@@ -1,8 +1,1 @@
-<template>
-  bbb
-</template>
-
-<script setup lang="ts">
-</script>
-
-<style scoped></style>
+<template>bbb</template>

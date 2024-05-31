@@ -1,13 +1,11 @@
 <template>
-    <el-input 
-        @input="(params: string | number) => { evFn(params, 'input') }" 
-        @clear="(params: string | number) => { evFn(params, 'clear') }" 
-        v-model.trim="form[attr.prop]"
+    <el-input @input="(params: string | number) => { evFn(params, 'input') }"
+        @clear="(params: string | number) => { evFn(params, 'clear') }" v-model.trim="form[attr.prop]"
         v-bind="mergeAttr" />
 </template>
 
 <script lang="ts" setup>
-import { computed, inject } from "vue";
+import { computed, inject, watch } from "vue";
 defineOptions({
     name: 'MyInput',
 })

@@ -8,7 +8,7 @@
     <li>星星评分类型</li>
     <li>固定数据下拉框类型</li>
   </ul>
-  <MyForm :conf="conf" :form="form" @ev="ev"></MyForm>
+  <MyForm :conf="conf" v-model="form" @ev="ev" :formAttr="formAttr" :btns="btns"></MyForm>
   <!-- <button @click="clearFn">清空</button>
   <button @click="setFn">赋值</button> -->
 </template>
@@ -132,6 +132,7 @@ const conf = reactive([
     type: 'MyRate', // 评分组件类型
     label: '今天心情如何',
     span: 12,
+    hidden: true,
     attr: {
       prop: 'heart',
       texts: ['不好', '一般', '好', '很好', '特别好'],
@@ -214,10 +215,45 @@ const conf = reactive([
  *    定义对象，其中的键为字符串，值为任意类型
  *    便于快速配置（form对象有很多key value）
  * */
-let form = ref<Record<string, any>>({})
+let form = ref<Record<string, any>>({
+  name: '',
+  nickName: '',
+  age: null,
+  gender: '',
+  likeBook: '',
+  whichDay: null,
+  workContent: '',
+  carOrEat: ''
+})
+
+let btns = {
+  cancel: {
+    name: '取消(外界传递)',
+    style: 'margin-left: 12px;',
+    hidden: false,
+  },
+  selfBtn1: {
+    name: '自定义按钮1',
+    icon: 'More',
+    type: "success",
+    hidden: true,
+    plain: true,
+    cb: (btn: object) => {
+      console.log('点击的是自定义按钮', btn);
+    }
+  },
+  selfBtn2: {
+    name: '自定义按钮2',
+    icon: 'GobletFull',
+    type: "success",
+    cb: (btn: object) => {
+      console.log('点击的是自定义按钮', btn);
+    }
+  },
+}
 
 watch(form.value, (newVal) => {
-  // console.log('newVal', newVal);
+  console.log('第一层', newVal);
 }, { deep: true })
 
 interface EventInfo {
@@ -258,6 +294,19 @@ const ev = (info: EventInfo) => {
     }
   }
 }
+
+const formAttr = reactive({
+  labelSuffix: ' :',
+  rules: {
+    nickName: [
+      { required: true, message: 'Please input Activity name', trigger: 'blur' },
+    ],
+  },
+  cb: (val: any) => {
+    console.log('外层接收', val);
+  }
+})
+
 
 const clearFn = () => {
   // form.value = {}

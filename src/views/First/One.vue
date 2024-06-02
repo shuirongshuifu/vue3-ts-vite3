@@ -1,12 +1,13 @@
 <template>
-  <h3>el-form组件二次封装——第一部分</h3>
+  <h3>el-form组件二次封装——第一部分(基本用法)</h3>
   <ul>
-    <li>文本输入框类型</li>
-    <li>数字输入框类型</li>
-    <li>radio圆点类型</li>
-    <li>radio按钮类型</li>
-    <li>星星评分类型</li>
-    <li>固定数据下拉框类型</li>
+    <li>各个类型组件基本用法</li>
+    <li>配置项conf</li>
+    <li>v-model双向绑定form</li>
+    <li>自定义事件ev</li>
+    <li>el-form配置项和cb回调函数</li>
+    <li>自定义按钮配置btns</li>
+    <li>MyFormRef调用子组件的提交、重置方法等...</li>
   </ul>
   <MyForm ref="MyFormRef" :conf="conf" v-model="form" @ev="ev" :formAttr="formAttr" :btns="btns"></MyForm>
   <hr>
@@ -281,7 +282,7 @@ let btns = {
 }
 
 watch(() => form.value, (newVal) => {
-  console.log('第一层', newVal);
+  // console.log('第一层', newVal);
 })
 
 interface EventInfo {
@@ -298,28 +299,33 @@ const ev = (info: EventInfo) => {
   }
   // 联动控制~周六汽车、周日小吃
   if (info.propName == 'whichDay') {
-    let carOrEatItem = conf.find((item) => { return item.attr.prop == 'carOrEat' })
-    // 非空断言操作
-    // carOrEatItem!.attr!.attr!.api = getSelectData2; 
-    if (info.propValue == 6) {
-      carOrEatItem!.attr!.attr!.api =
-        (function (params) {
-          return function () {
-            return getSelectDataNeedParams(params)
-          }
-        })('car')
-    }
-    if (info.propValue == 7) {
-      carOrEatItem!.attr!.attr!.api =
-        (function (params) {
-          return function () {
-            return getSelectDataNeedParams(params)
-          }
-        })('food')
-    }
-    if (!info.propValue) {
-      form.value.carOrEat = ''
-    }
+    // 更改对应下拉框联动控制选项
+    changeCarOrEatSelectOptions(info.propValue)
+    // 清空控制的选项的值
+    form.value.carOrEat = ''
+  }
+}
+
+const changeCarOrEatSelectOptions = (val: number | string) => {
+  // 找到某一项
+  let carOrEatItem = conf.find((item) => { return item.attr.prop == 'carOrEat' })
+  // 非空断言操作
+  // carOrEatItem!.attr!.attr!.api = getSelectData2; 
+  if (val == 6) {
+    carOrEatItem!.attr!.attr!.api =
+      (function (params) {
+        return function () {
+          return getSelectDataNeedParams(params)
+        }
+      })('car')
+  }
+  if (val == 7) {
+    carOrEatItem!.attr!.attr!.api =
+      (function (params) {
+        return function () {
+          return getSelectDataNeedParams(params)
+        }
+      })('food')
   }
 }
 
@@ -349,6 +355,7 @@ const setFn = () => {
     workContent: 'code',
     carOrEat: 'lanzhou'
   }
+  changeCarOrEatSelectOptions(form.value['whichDay'])
 }
 
 interface MyFormType {

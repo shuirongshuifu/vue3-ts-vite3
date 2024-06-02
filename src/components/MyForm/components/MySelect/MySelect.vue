@@ -35,7 +35,7 @@ const mergeAttr = computed(() => {
 
 let optionsData: any = ref([])
 
-watch(props.attr.attr, (newVal) => {
+watch(() => props.attr.attr, (newVal) => {
     const { options, api, cb } = newVal
     if (options) {
         optionsData.value = options
@@ -51,10 +51,10 @@ watch(props.attr.attr, (newVal) => {
 })
 
 interface EventData {
-  componentName: string;
-  eventName: string;
-  propName: string;
-  propValue: string | number;
+    componentName: string;
+    eventName: string;
+    propName: string;
+    propValue: string | number;
 }
 
 const evFn = (val: string | number, eventName: string) => {

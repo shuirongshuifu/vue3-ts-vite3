@@ -5,6 +5,9 @@
         <el-col v-if="!item.hidden" :span="item.span" class="setElCol">
           <el-form-item style="width: 100%;" :label="item.label" :prop="item.attr.prop">
             <component :is="item.type" :form="modelValue" :attr="item.attr">
+              <template v-slot:[slot] v-for="(_, slot) in slots">
+                <slot :name="slot"></slot>
+              </template>
             </component>
           </el-form-item>
         </el-col>
@@ -21,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, watch, computed, defineExpose } from "vue";
+import { ref, provide, watch, computed, defineExpose, defineSlots } from "vue";
 import { cloneDeep } from "lodash";
 
 import MyInput from "./components/MyInput/MyInput.vue";
@@ -36,6 +39,8 @@ defineOptions({
   name: 'MyForm',
   components: { MyInput, MyInputNumber, MyRadio, MyRate, MySelect }
 })
+
+const slots = defineSlots();
 
 interface ConfItem {
   [key: string]: any;

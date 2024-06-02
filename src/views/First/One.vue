@@ -8,9 +8,11 @@
     <li>星星评分类型</li>
     <li>固定数据下拉框类型</li>
   </ul>
-  <MyForm :conf="conf" v-model="form" @ev="ev" :formAttr="formAttr" :btns="btns"></MyForm>
-  <!-- <button @click="clearFn">清空</button>
-  <button @click="setFn">赋值</button> -->
+  <MyForm ref="MyFormRef" :conf="conf" v-model="form" @ev="ev" :formAttr="formAttr" :btns="btns"></MyForm>
+  <hr>
+  <button @click="setFn">外层赋值</button>
+  <button @click="clearFn">外层清空</button>
+  <button @click="submitFn">外层提交</button>
 </template>
 
 <script setup lang="ts">
@@ -125,6 +127,32 @@ const conf = reactive([
             value: 'xiyou'
           },
         ]
+      }
+    },
+  },
+  {
+    type: 'MySelect',
+    label: '技能',
+    span: 18,
+    attr: {
+      prop: 'skill',
+      placeholder: '请选择技能',
+      multiple: true,
+      attr: {
+        options: [
+          {
+            label: '筋斗云',
+            value: '筋斗云'
+          },
+          {
+            label: '火眼金睛',
+            value: '火眼金睛'
+          },
+          {
+            label: '七十二变',
+            value: '七十二变'
+          },
+        ],
       }
     },
   },
@@ -252,9 +280,9 @@ let btns = {
   },
 }
 
-watch(form.value, (newVal) => {
+watch(() => form.value, (newVal) => {
   console.log('第一层', newVal);
-}, { deep: true })
+})
 
 interface EventInfo {
   componentName: string,
@@ -299,7 +327,8 @@ const formAttr = reactive({
   labelSuffix: ' :',
   rules: {
     nickName: [
-      { required: true, message: 'Please input Activity name', trigger: 'blur' },
+      { required: true, message: '昵称必填', trigger: 'blur' },
+      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
     ],
   },
   cb: (val: any) => {
@@ -307,12 +336,31 @@ const formAttr = reactive({
   }
 })
 
+const setFn = () => {
+  form.value = {
+    id: '147258369',
+    name: '孙悟空',
+    nickName: '齐天大圣',
+    age: 500,
+    gender: '1',
+    likeBook: 'xiyou',
+    skill: ['筋斗云', '火眼金睛'],
+    whichDay: 7,
+    workContent: 'code',
+    carOrEat: 'lanzhou'
+  }
+}
+
+interface MyFormType {
+  clickBtn: (btnName: string, btnObj?: object) => void;
+}
+const MyFormRef = ref<MyFormType>();
 
 const clearFn = () => {
-  // form.value = {}
+  MyFormRef.value?.clickBtn('reset')
 }
-const setFn = () => {
-  // form.value['age'] = 999
+const submitFn = () => {
+  MyFormRef.value?.clickBtn('submit')
 }
 </script>
 
@@ -325,5 +373,9 @@ ul {
 li {
   margin: 6px 24px;
   font-weight: 600;
+}
+
+button {
+  margin: 0 6px;
 }
 </style>

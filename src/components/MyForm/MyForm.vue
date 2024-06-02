@@ -1,12 +1,14 @@
 <template>
   <el-form ref="myFormRef" :model="modelValue" v-bind="mergeAttr" @keyup.enter="submit(myFormRef)">
     <el-row>
-      <el-col class="setElCol" :span="item.span" v-for="(item, index) in conf">
-        <el-form-item v-if="!item.hidden" style="width: 100%;" :label="item.label" :prop="item.attr.prop">
-          <component :is="item.type" :form="modelValue" :attr="item.attr">
-          </component>
-        </el-form-item>
-      </el-col>
+      <template v-for="(item, index) in conf">
+        <el-col v-if="!item.hidden" :span="item.span" class="setElCol">
+          <el-form-item style="width: 100%;" :label="item.label" :prop="item.attr.prop">
+            <component :is="item.type" :form="modelValue" :attr="item.attr">
+            </component>
+          </el-form-item>
+        </el-col>
+      </template>
       <el-col style="flex: 1">
         <el-form-item>
           <template v-for="(btn, key) in mergeBtns">
@@ -114,10 +116,10 @@ defineExpose({
 });
 
 
-watch(props.modelValue, (newVal) => {
+watch(() => props.modelValue, (newVal) => {
   // 更新外层v-model数据
   emit('update:modelValue', newVal);
-})
+}, { deep: true })
 
 // 为第三层提供事件中转钩子函数
 provide('eventCallBack', (info: object) => {

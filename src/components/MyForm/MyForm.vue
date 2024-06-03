@@ -32,12 +32,13 @@ import MyInputNumber from "./components/MyInputNumber/MyInputNumber.vue";
 import MyRadio from "./components/MyRadio/MyRadio.vue";
 import MyRate from "./components/MyRate/MyRate.vue";
 import MySelect from "./components/MySelect/MySelect.vue";
+import MyDate from "./components/MyDate/MyDate.vue";
 
 import type { FormInstance, FormRules } from 'element-plus'
 
 defineOptions({
   name: 'MyForm',
-  components: { MyInput, MyInputNumber, MyRadio, MyRate, MySelect }
+  components: { MyInput, MyInputNumber, MyRadio, MyRate, MySelect, MyDate }
 })
 
 const slots = defineSlots();
@@ -79,7 +80,7 @@ const reset = (myFormRef: FormInstance | undefined) => {
   // 更新外层v-model数据，并清除表单校验
   emit('update:modelValue', initForm);
   myFormRef?.resetFields()
-  props.formAttr.cb({
+  props.formAttr?.cb({
     btnName: 'reset',
     formVal: props.modelValue
   })
@@ -90,7 +91,7 @@ const submit = async (myFormRef: FormInstance | undefined) => {
   if (!myFormRef) return
   await myFormRef.validate((valid, fields) => {
     if (valid) {
-      props.formAttr.cb({
+      props.formAttr?.cb({
         btnName: 'submit',
         formVal: props.modelValue
       })
@@ -102,7 +103,7 @@ const submit = async (myFormRef: FormInstance | undefined) => {
 
 // 取消操作通知外面
 const cancel = () => {
-  props.formAttr.cb({
+  props.formAttr?.cb({
     btnName: 'cancel',
     formVal: props.modelValue
   })

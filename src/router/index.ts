@@ -5,6 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/one', // 添加这一行来实现重定向到'/one'路由
       name: 'home',
       component: () => import('../views/HomeView.vue'),
       children: [

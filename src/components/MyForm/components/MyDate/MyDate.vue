@@ -1,17 +1,13 @@
 <template>
-    <el-input-number v-model="form[attr.prop]" v-bind="mergeAttr">
-        <template v-slot:[slotName.split(':')[1]] v-for="(_, slotName) in filterSlots">
-            <slot :name="slotName"></slot>
-        </template>
-    </el-input-number>
+    <el-date-picker v-model="form[attr.prop]" v-bind="mergeAttr" >
+    </el-date-picker>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useHookSlots } from "../hook/index";
 
 defineOptions({
-    name: 'MyInputNumber',
+    name: 'MyDate',
 })
 const props = defineProps({
     form: {
@@ -29,6 +25,4 @@ const mergeAttr = computed(() => {
     }
     return { ...defaultAttr, ...props.attr }
 })
-const slots = defineSlots();
-const { filterSlots } = useHookSlots(slots, props.attr.prop)
 </script>

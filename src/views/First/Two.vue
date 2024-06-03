@@ -36,6 +36,8 @@
     <template #nullnull:empty>
       🌈没数据哦...🌈
     </template>
+    <template #price:decrease-icon>➖</template>
+    <template #price:increase-icon>➕</template>
   </MyForm>
 </template>
 
@@ -126,6 +128,30 @@ const conf = reactive([
       }
     },
   },
+  {
+    type: 'MyInputNumber', // 数字输入框类型
+    label: '价格',
+    span: 18,
+    attr: {
+      prop: 'price',
+      placeholder: '请输入价格',
+      min: 0,
+      max: 100,
+      step: 10,
+      style: 'width: 240px;'
+    },
+  },
+  {
+    type: 'MyDate',
+    label: '开始时间',
+    span: 18,
+    attr: {
+      prop: 'startTime',
+      placeholder: '请输入开始时间',
+      type: 'date',
+      style: 'width: 100%;'
+    }
+  }
 ])
 
 const btns = {
@@ -139,16 +165,7 @@ const btns = {
  *    定义对象，其中的键为字符串，值为任意类型
  *    便于快速配置（form对象有很多key value）
  * */
-let form = ref<Record<string, any>>({
-  name: '',
-  nickName: '',
-  age: null,
-  gender: '',
-  likeBook: '',
-  whichDay: null,
-  workContent: '',
-  carOrEat: ''
-})
+let form = ref<Record<string, any>>({})
 
 interface MyFormType {
   clickBtn: (btnName: string, btnObj?: object) => void;

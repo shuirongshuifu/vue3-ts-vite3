@@ -1,6 +1,6 @@
 <template>
   <div class="topLevelWrap">
-    <el-menu v-bind="attrs" @open="handleOpen" @close="handleClose" @select="selectMenu">
+    <el-menu v-bind="attrs">
       <el-sub-menu :index="item.path" v-for="(item, index) in meunArr" :key="index">
         <template #title>
           <el-icon>
@@ -20,15 +20,17 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
+const route = useRoute();
 
 const attrs = {
   activeTextColor: "#ffd04b",
   backgroundColor: "#545c64",
   class: "el-menu-vertical-demo",
-  defaultActive: "",
+  defaultActive: route.path,
   textColor: "#fff",
-  router: true
+  router: true,
+  uniqueOpened: true
 }
 
 const meunArr = [

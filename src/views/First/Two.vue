@@ -18,17 +18,24 @@
     </template>
     <template #age:prefix>
       <el-icon>
-        <Ship />
+        <Moon />
       </el-icon>
     </template>
     <template #age:suffix>
       <el-icon>
-        <Moon />
+        <Star />
       </el-icon>
     </template>
     <template #web:prepend>Http://</template>
     <template #web:append>.com</template>
-    <template #skill:header>^_^</template>
+    <template #skill:header>🤔🤔🤔</template>
+    <template #skill:footer>😁😁😁</template>
+    <template #way:prefix>
+      <h2>🚇</h2>
+    </template>
+    <template #nullnull:empty>
+      🌈没数据哦...🌈
+    </template>
   </MyForm>
 </template>
 
@@ -87,6 +94,35 @@ const conf = reactive([
             value: '七十二变'
           },
         ],
+      }
+    },
+  },
+  {
+    type: 'MySelect',
+    label: '道路',
+    span: 18,
+    attr: {
+      prop: 'way',
+      placeholder: '请选择道路',
+      attr: {
+        options: [
+          { label: '考公', value: '考公' },
+          { label: '考研', value: '考研' },
+          { label: '出国留学', value: '出国留学' },
+          { label: '出门打工', value: '出门打工' },
+        ]
+      }
+    },
+  },
+  {
+    type: 'MySelect',
+    label: '空空',
+    span: 18,
+    attr: {
+      prop: 'nullnull',
+      placeholder: '请选择空空',
+      attr: {
+        options: []
       }
     },
   },

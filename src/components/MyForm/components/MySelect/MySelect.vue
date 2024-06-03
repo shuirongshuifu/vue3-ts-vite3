@@ -2,12 +2,17 @@
     <el-select @change="(params: string | number) => {
         evFn(params, 'change')
     }" v-model="form[attr.prop]" v-bind="mergeAttr">
+        <template v-slot:[slotName.split(':')[1]] v-for="(_, slotName) in filterSlots">
+            <slot :name="slotName"></slot>
+        </template>
         <el-option v-for="item in optionsData" :key="item.value" :label="item.label" :value="item.value" />
     </el-select>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed, watch, inject } from "vue";
+import { useHookSlots } from "../hook/index";
+
 defineOptions({
     name: 'MySelect',
 })
@@ -32,6 +37,9 @@ const mergeAttr = computed(() => {
     }
     return { ...defaultAttr, ...props.attr }
 })
+
+const slots = defineSlots();
+const { filterSlots } = useHookSlots(slots, props.attr.prop)
 
 let optionsData: any = ref([])
 

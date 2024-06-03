@@ -37,11 +37,11 @@ const meunArr = [
     path: '',
     children: [
       {
-        name: '表单组件封装',
+        name: '表单组件封装1',
         path: '/one',
       },
       {
-        name: 'two',
+        name: '表单组件封装2',
         path: '/two',
       },
       {

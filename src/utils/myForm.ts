@@ -29,6 +29,19 @@ export const getSelectData2 = () => {
     })
 }
 
+export const getSelectData3 = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve([
+                { label: '考公', value: '考公' },
+                { label: '考研', value: '考研' },
+                { label: '出国留学', value: '出国留学' },
+                { label: '出门打工', value: '出门打工' },
+            ])
+        }, 500);
+    })
+}
+
 // 需要传递参数的接口函数
 export const getSelectDataNeedParams = (type: string) => {
     return new Promise((resolve, reject) => {

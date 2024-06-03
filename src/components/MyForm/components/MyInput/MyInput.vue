@@ -10,12 +10,11 @@
 
 <script lang="ts" setup>
 import { computed, inject, watch, defineSlots } from "vue";
+import { useHookSlots } from "../hook/index";
 
 defineOptions({
     name: 'MyInput',
 })
-
-const slots = defineSlots();
 
 const cb = inject('eventCallBack') as (params: { [key: string]: any }) => void;
 
@@ -29,6 +28,7 @@ const props = defineProps({
         required: true,
     },
 });
+
 const mergeAttr = computed(() => {
     const defaultAttr = {
         clearable: true,
@@ -36,6 +36,9 @@ const mergeAttr = computed(() => {
     }
     return { ...defaultAttr, ...props.attr }
 })
+
+const slots = defineSlots();
+const { filterSlots } = useHookSlots(slots, props.attr.prop)
 
 const evFn = (val: string | number, eventName: string) => {
     const ev = {
@@ -47,12 +50,4 @@ const evFn = (val: string | number, eventName: string) => {
     cb(ev)
 }
 
-// 考虑提取出来做hook
-const filterSlots = Object.entries(slots).reduce((acc, [slotName, slotContent]) => {
-    if (slotName.includes(props.attr.prop)) {
-        acc[slotName] = slotContent;
-    }
-    return acc;
-}, {} as Record<string, any>)
-console.log('filterSlots', filterSlots);
 </script>

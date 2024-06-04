@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, provide, watch, computed, defineExpose, defineSlots } from "vue";
+import { ref, provide, watch, computed, defineSlots } from "vue";
 import { cloneDeep } from "lodash";
 
 import MyInput from "./components/MyInput/MyInput.vue";

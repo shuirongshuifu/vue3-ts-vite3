@@ -1,44 +1,91 @@
 <template>
   <div class="demo-date-picker">
-    <el-date-picker
-      v-model="value"
-      type="date"
-      placeholder="Pick a day"
-      format="YYYY/MM/DD"
-      value-format="YYYY-MM-DD"
-    >
-      <template #default="cell">{{ cellFn(cell) }}
-        <!-- <div class="cell" :class="{ current: cell.isCurrent }">
-          <span class="text">{{ cell.text }}</span>
-          <span v-if="isHoliday(cell)" class="holiday" />
-        </div> -->
+    <MyTable :columns="columns" :data="data" @selection-change="fn">
+      <template #link:default="scope">
+        <a :href="scope.row.link" target="_blank"> 点击跳： {{ scope.row.name }}</a>
       </template>
-    </el-date-picker>
+      <template #address:header>
+        表头
+      </template>
+    </MyTable>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import MyTable from "@/components/MyTable/MyTable.vue";
 
-const value = ref('2021-10-29')
-const holidays = [
-  '2021-10-01',
-  '2021-10-02',
-  '2021-10-03',
-  '2021-10-04',
-  '2021-10-05',
-  '2021-10-06',
-  '2021-10-07',
+const data = [
+  {
+    date: '2016-05-01',
+    name: '百度',
+    age: 66.666,
+    link: 'https://www.baidu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: '知乎',
+    age: 77.777,
+    link: 'https://www.zhihu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-03',
+    name: '头条',
+    age: 88.888,
+    link: 'https://www.toutiao.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
 ]
 
-const cellFn = (params: any)=>{
-  console.log('日期', params);
-  
+const fn = (va: any) => {
+  console.log(va);
+}
+const fnfn = (va: any) => {
+  console.log('fnfn', va);
 }
 
-const isHoliday = ({ dayjs }) => {
-  return holidays.includes(dayjs.format('YYYY-MM-DD'))
-}
+const columns: any = [
+  {
+    type: "selection",
+    width: "40",
+  },
+  {
+    type: 'index',
+    label: "序号",
+    width: "60",
+    index: (i: number) => i * 2
+  },
+  {
+    prop: 'name',
+    label: "姓名",
+    width: "120",
+    formatter(row: Record<string, any>) {
+      return '😄 ' + row.name + ' 😄'
+    }
+  },
+  {
+    prop: 'age',
+    label: "年龄",
+    width: "80",
+  },
+  {
+    prop: 'link',
+    label: "外链",
+    width: "210"
+  },
+  {
+    prop: 'date',
+    label: "日期",
+    width: "180"
+  },
+  {
+    prop: 'address',
+    label: "地址",
+    width: "180"
+  },
+]
+
 </script>
 
 <style scoped>
@@ -47,6 +94,7 @@ const isHoliday = ({ dayjs }) => {
   padding: 3px 0;
   box-sizing: border-box;
 }
+
 .cell .text {
   width: 24px;
   height: 24px;
@@ -58,10 +106,12 @@ const isHoliday = ({ dayjs }) => {
   transform: translateX(-50%);
   border-radius: 50%;
 }
+
 .cell.current .text {
   background: #626aef;
   color: #fff;
 }
+
 .cell .holiday {
   position: absolute;
   width: 6px;

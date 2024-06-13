@@ -85,10 +85,12 @@ const selectMenu = (index: String, indexPath: String, routeResult: any) => {
 <style scoped>
 .topLevelWrap {
   display: flex;
+  min-width: 1000px;
 }
 
 .mainContent {
-  flex: 1;
+  /* flex: 1; */
+  width: calc(100% - 200px);
   box-sizing: border-box;
   padding: 12px;
 }

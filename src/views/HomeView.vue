@@ -47,8 +47,12 @@ const meunArr = [
         path: '/two',
       },
       {
-        name: 'three',
+        name: '表格组件封装1',
         path: '/three',
+      },
+      {
+        name: '表格组件封装2',
+        path: '/four',
       },
     ]
   },

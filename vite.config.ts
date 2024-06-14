@@ -14,5 +14,15 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  server: {
+    // https: true,
+    proxy: {
+      '/auth': {
+        target: 'http://ashuai.work:10000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/auth/, "")
+      }
+    },
+  },
 })

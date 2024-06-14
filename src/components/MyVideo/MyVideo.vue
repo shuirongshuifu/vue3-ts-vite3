@@ -13,7 +13,7 @@ defineOptions({ name: 'MyVideo' })
 
 onMounted(() => { init() })
 
-let player = null // 实例
+let player: any = null // 实例
 
 // 拖动（向前、向后）情况最后考虑
 const timeInfo = {

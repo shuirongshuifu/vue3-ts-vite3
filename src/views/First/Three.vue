@@ -1,6 +1,6 @@
 <template>
   <div class="demo-date-picker">
-    <MyTable :columns="columns" :pageInfo="pageInfo" :data="data" @selection-change="fn">
+    <MyTable height="360" :columns="columns" :pageInfo="pageInfo" :data="data" @selection-change="fn">
       <template #link:default="scope">
         <a :href="scope.row.link" target="_blank"> 点击跳： {{ scope.row.name }}</a>
       </template>
@@ -18,76 +18,8 @@
 
 <script lang="ts" setup>
 import MyTable from "@/components/MyTable/MyTable.vue";
-import MyPage from "@/components/MyPage/MyPage.vue";
 import { reactive } from "vue";
 
-const data = [
-  {
-    date: '2016-05-01',
-    name: '百度',
-    age: 66.666,
-    link: 'https://www.baidu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: '知乎',
-    age: 77.777,
-    link: 'https://www.zhihu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-03',
-    name: '头条',
-    age: 88.888,
-    link: 'https://www.toutiao.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: '百度',
-    age: 66.666,
-    link: 'https://www.baidu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: '知乎',
-    age: 77.777,
-    link: 'https://www.zhihu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-03',
-    name: '头条',
-    age: 88.888,
-    link: 'https://www.toutiao.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: '百度',
-    age: 66.666,
-    link: 'https://www.baidu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: '知乎',
-    age: 77.777,
-    link: 'https://www.zhihu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-03',
-    name: '头条',
-    age: 88.888,
-    link: 'https://www.toutiao.com/',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
-
-// 单独拎出来，成为hook
 let pageInfo = reactive({
   offset: 1,
   limit: 50,
@@ -156,8 +88,69 @@ const op = (val: string, row: object) => {
   console.log(val, row);
 }
 
-
-
+const data = [
+  {
+    date: '2016-05-01',
+    name: '百度',
+    age: 66.666,
+    link: 'https://www.baidu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: '知乎',
+    age: 77.777,
+    link: 'https://www.zhihu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-03',
+    name: '头条',
+    age: 88.888,
+    link: 'https://www.toutiao.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: '百度',
+    age: 66.666,
+    link: 'https://www.baidu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: '知乎',
+    age: 77.777,
+    link: 'https://www.zhihu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-03',
+    name: '头条',
+    age: 88.888,
+    link: 'https://www.toutiao.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: '百度',
+    age: 66.666,
+    link: 'https://www.baidu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: '知乎',
+    age: 77.777,
+    link: 'https://www.zhihu.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-03',
+    name: '头条',
+    age: 88.888,
+    link: 'https://www.toutiao.com/',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
 </script>
-
-<style scoped></style>

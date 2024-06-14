@@ -61,7 +61,7 @@ const mergeSlotsColumns = computed(() => {
 const defaultColumn = {
   align: 'center',
   showOverflowTooltip: true,
-  sortable: true,
+  sortable: false,
 }
 const mergeDefaultColumnsFn = (column: object) => {
   return { ...defaultColumn, ...(column as object) }

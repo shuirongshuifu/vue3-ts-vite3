@@ -30,6 +30,11 @@ const router = createRouter({
           component: () => import('../views/First/Four.vue'),
         },
         {
+          path: '/five',
+          name: 'Five',
+          component: () => import('../views/First/Five.vue'),
+        },
+        {
           path: '/aaa',
           name: 'Aaa',
           component: () => import('../views/Second/Aaa.vue'),

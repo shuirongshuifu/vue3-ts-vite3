@@ -54,6 +54,10 @@ const meunArr = [
         name: '表格组件封装2',
         path: '/four',
       },
+      {
+        name: '表格组件封装3',
+        path: '/five',
+      },
     ]
   },
   {

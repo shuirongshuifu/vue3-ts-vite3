@@ -2,9 +2,9 @@
   <div class="demo-date-picker">
     <MyTable height="360" :columns="columns" :pageInfo="pageInfo" :data="data" @selection-change="fn">
       <template #link:default="scope">
-        <a :href="scope.row.link" target="_blank"> 点击跳： {{ scope.row.name }}</a>
+        <a :href="scope.row.link" target="_blank"> 点击跳跳跳： {{ scope.row.name }}</a>
       </template>
-      <template #address:header>
+      <template #link:header="scope">
         表头
       </template>
       <template #operation:default="scope">

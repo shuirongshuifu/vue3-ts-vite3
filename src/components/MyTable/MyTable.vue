@@ -4,7 +4,7 @@
       <SelfColumns v-for="(column) in mergeSlotsColumns" :column="mergeDefaultColumnsFn(column as object)">
       </SelfColumns>
     </el-table>
-    <el-pagination class="myPage" v-model:current-page="pageInfo.offset" v-model:page-size="pageInfo.limit"
+    <el-pagination v-if="!pageInfo.hidden" class="myPage" v-model:current-page="pageInfo.offset" v-model:page-size="pageInfo.limit"
       :total="pageInfo.total" :page-sizes="[20, 50, 100, 200]" layout="total, sizes, prev, pager, next, jumper"
       :background="true" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
   </div>

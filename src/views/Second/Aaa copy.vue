@@ -10,6 +10,8 @@
 </template>
 
 <script lang="ts" setup>
+// 禁用整个ts校验
+// @ts-nocheck
 import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 
 interface User {

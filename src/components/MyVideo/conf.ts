@@ -4,8 +4,8 @@ export const conf: object = {
      * */
     id: 'xgPlayerWrap', // 占位dom元素
     width: 600, height: 400, // 视频宽高尺寸
-    url: 'http://ashuai.work/api/mp4.mp4', // 视频源
-    poster: "http://ashuai.work/static/img/avantar.png", // 视频封面
+    url: '', // 视频源 http://ashuai.work/api/mp4.mp4
+    poster: "", // 视频封面 http://ashuai.work/static/img/avantar.png
     autoplay: false, // 是否自动播放，不自动播放，浏览器有限制规则
     autoplayMuted: false, // 是否自动播放（静音播放）
     videoInit: true, // 是否默认初始化video，默认初始化，默认true
@@ -60,4 +60,13 @@ export const conf: object = {
     // playbackRate: [0.5, 1, 1.5, 2, 3], //传入倍速可选数组
     playbackRate: false, //false，禁用倍速播放（即控制栏不显示）
     keyShortcut: false, // 是否开启快捷键模式
+    /**
+     * 交互配置
+     * */ 
+    enableContextmenu: false, // 禁用视频区域的右键菜单
+    // // disableProgress: false
+    // disableProgress: {
+    //     autoDisable: true
+    // }
+    allowSeekPlayed: true
 }

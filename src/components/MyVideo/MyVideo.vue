@@ -1,19 +1,57 @@
 <template>
     <div id="xgPlayerWrap"></div>
+    <button @click="notnot">禁用</button>
+    <button @click="cancan">可用</button>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive, computed } from 'vue';
-import Player, { Events } from 'xgplayer'; // 引入西瓜视频模块
-import 'xgplayer/dist/index.min.css'; // 引入西瓜视频样式
-
+import { ref, watch, onMounted, reactive, computed, onUnmounted } from 'vue';
+import Player from 'xgplayer';
+import 'xgplayer/dist/index.min.css';
 import { conf } from "./conf";
+import { useCtrlDrag } from "@/hook/ctrlDrag";
+
+const { onMonitor, offMonitor } = useCtrlDrag()
 
 defineOptions({ name: 'MyVideo' })
 
-onMounted(() => { init() })
+const props = defineProps({
+    // 视频配置
+    videoInfo: {
+        type: Object,
+        default: () => {
+            return {
+                url: '',
+                poster: '',
+                lastPlayTime: ''
+            }
+        }
+    }
+});
 
 let player: any = null // 实例
+
+watch(() => props.videoInfo.url, () => {
+    player && player.destroy()
+    init()
+})
+
+const emit = defineEmits(['play', 'pause', 'savePlayInfo']);
+
+let status = '看完了'
+// let status = '没看完'
+
+onMounted(() => {
+    init()
+    setTimeout(() => {
+        if (status == '没看完') {
+            onMonitor()
+        } else {
+            offMonitor()
+        }
+    }, 500);
+})
+onUnmounted(() => { player && player.destroy() })
 
 // 拖动（向前、向后）情况最后考虑
 const timeInfo = {
@@ -23,52 +61,77 @@ const timeInfo = {
     endTimestamp: 0 // 停止播放对应的时间戳
 }
 
+let tim = 0
+let lastTime = 0;
+
 const init = () => {
     player = new Player({
-        ...conf
+        ...conf,
+        ...props.videoInfo,
     });
-    player.on(Events.PLAY, (v: any) => {
+    player.on('play', (v: any) => {
         timeInfo.startSecond = getCurrentVideoPlayTime()
         timeInfo.startTimestamp = new Date().getTime()
-        console.log('-播放开始记录-', timeInfo);
+        // emit('play', timeInfo)
     })
-    player.on(Events.PAUSE, (v: any) => {
-        timeInfo.endSecond = getCurrentVideoPlayTime()
+    player.on('pause', (v: any) => {
+        timeInfo.endSecond = isEnd() ? getVideoDurationTime() : getCurrentVideoPlayTime()
         timeInfo.endTimestamp = new Date().getTime()
-        console.log('-停止发请求-', timeInfo);
-        sessionStorage.setItem('saveLastTime', timeInfo.endSecond)
+        // emit('pause', timeInfo)
+        // savePlayInfo()
+        // if (isEnd()) {
+        //     console.log('播放完毕的暂停');
+        // } else {
+        //     console.log('中间暂停');
+        // }
     })
-    player.on(Events.TIME_UPDATE, (v: any) => {
-        // console.log('-TIME_UPDATE-', v);
+    // player.on('seeking', (v:any)=>{
+    //     if(v.currentTime > tim){
+
+    //     }
+    //     if(v.currentTime < tim){
+
+    //     }
+    //     // video.currentTime = video.seekable.start(0)
+    // })
+
+    player.on('timeupdate', (v: any) => {
+        // if (player.currentTime > lastTime) {
+        //     console.log('向右');
+        // } else if (player.currentTime < lastTime) {
+        //     console.log('向左');
+        // }
+        // lastTime = player.currentTime;
     })
-    player.on(Events.SEEKED, (v: any) => {
-        // console.log('-SEEKED-', v);
-    })
-    player.on('loadedmetadata', (v: any) => {
-        console.log('-媒体数据加载好了-', v);
-        let saveLastTime = sessionStorage.getItem('saveLastTime')
-        if (saveLastTime) {
-            console.log('saveLastTimesaveLastTime', saveLastTime);
-            player.seek(Number(saveLastTime))
-        }
-    })
+    // player.on('loadedmetadata', (v: any) => {
+    //     console.log('-媒体数据加载好了-', v);
+    // })
+
+
+
+
 }
+
+
+const savePlayInfo = () => {
+    emit('savePlayInfo', timeInfo)
+    console.log('保存播放信息', timeInfo);
+    // 开始暂停替换
+}
+
+// 是否播放完毕
+const isEnd = () => player.currentTime == player.duration
 
 // 获取当前视频播放的时间位置，如当前视频播放到第12秒
 const getCurrentVideoPlayTime = () => Math.floor(player.currentTime)
 
-
-
+// 获取当前视频的总时长，如一个视频两分钟即120秒
+const getVideoDurationTime = () => Math.floor(player.duration)
 
 </script>
 
 <style scoped>
 #xgPlayerWrap {
     flex: auto;
-}
-
-#xgPlayerWrap video {
-    width: 100%;
-    color: chocolate;
 }
 </style>

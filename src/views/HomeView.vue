@@ -21,7 +21,12 @@
 
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
+import { meunAr } from '@/router/index'
+
+console.log('meunAr', meunAr);
+
 const route = useRoute();
+
 
 const attrs = {
   activeTextColor: "#ffd04b",
@@ -33,48 +38,7 @@ const attrs = {
   uniqueOpened: true
 }
 
-const meunArr = [
-  {
-    name: 'First',
-    path: '',
-    children: [
-      {
-        name: '表单组件封装1',
-        path: '/one',
-      },
-      {
-        name: '表单组件封装2',
-        path: '/two',
-      },
-      {
-        name: '表格组件封装1',
-        path: '/three',
-      },
-      {
-        name: '表格组件封装2',
-        path: '/four',
-      },
-      {
-        name: '表格组件封装3',
-        path: '/five',
-      },
-    ]
-  },
-  {
-    name: 'Second',
-    path: '',
-    children: [
-      {
-        name: 'aaa',
-        path: '/aaa',
-      },
-      {
-        name: 'bbb',
-        path: '/bbb',
-      },
-    ]
-  },
-]
+const meunArr = meunAr
 
 // keyPath类型注解，keyPath是数组，数组中的每一项都是字符串
 const handleOpen = (key: string, keyPath: string[]) => {

@@ -7,14 +7,18 @@ export function useCtrlDrag() {
 
     // 不能拖拽
     const notDrag = () => {
-        const progressDom = document.querySelector(dom) as HTMLElement;;
-        progressDom.style.pointerEvents = "none"
+        const progressDom = document.querySelector(dom) as HTMLElement;
+        if (progressDom) {
+            progressDom.style.pointerEvents = "none"
+        }
     }
 
     // 能拖拽
     const canDrag = () => {
         const progressDom = document.querySelector(dom) as HTMLElement;
-        progressDom.style.pointerEvents = "auto"
+        if (progressDom) {
+            progressDom.style.pointerEvents = "auto"
+        }
     }
 
     // 添加监控不允许拖动

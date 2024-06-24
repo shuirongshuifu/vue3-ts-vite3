@@ -46,9 +46,6 @@ export default {
         this.initPlayer()
       }
     },
-    highlight: function () {
-      this.initHighLight()
-    }
   },
   beforeDestroy () {
     this.dbPlayer && this.dbPlayer.destroy()
@@ -91,29 +88,6 @@ export default {
           }
           this.initPlayEvent()
         })
-      }
-    },
-    initHighLight () {
-      const highlightArr = this.highlight
-      this.highlightPause = (this.highlight || []).filter(item => item.needPause && item.time).sort((pre, next) => pre.time - next.time)
-      if (this.dbPlayer) {
-        this.dbPlayer.options.highlight = highlightArr
-        if (highlightArr) {
-          const highlights = this.$refs.videoContainer.querySelectorAll('.dplayer-highlight');
-          [].slice.call(highlights, 0).forEach((item) => {
-            this.dbPlayer.template.playedBarWrap.removeChild(item)
-          })
-          for (let i = 0; i < highlightArr.length; i++) {
-            if (!highlightArr[i].text || !highlightArr[i].time) {
-              continue
-            }
-            const p = document.createElement('div')
-            p.classList.add('dplayer-highlight')
-            p.style.left = (highlightArr[i].time / this.dbPlayer.video.duration) * 100 + '%'
-            p.innerHTML = '<span class="dplayer-highlight-text">' + highlightArr[i].text + '</span>'
-            this.dbPlayer.template.playedBarWrap.insertBefore(p, this.dbPlayer.template.playedBarTime)
-          }
-        }
       }
     },
     initPlayEvent () {

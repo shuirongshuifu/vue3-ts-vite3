@@ -13,7 +13,8 @@ import MyVideo from "@/components/MyVideo/MyVideo.vue";
 
 const videoInfo = reactive({
     url: 'http://ashuai.work/api/mp4.mp4',
-    poster: 'http://ashuai.work/static/img/avantar.png',
+    poster: '',
+    lastPlayTime: 66,
 })
 
 const chan = () => {
@@ -23,6 +24,6 @@ const chan = () => {
 
 <style>
 .kkk {
-    width: 600px;
+    width: 800px;
 }
 </style>

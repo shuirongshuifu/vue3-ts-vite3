@@ -1,7 +1,4 @@
 // 控制是否禁用xgplayer拖动
-
-import { ElMessage } from 'element-plus'
-
 export function useCtrlDrag() {
 
     const dom = '#xgPlayerWrap xg-controls xg-inner-controls xg-center-grid xg-progress'
@@ -20,8 +17,9 @@ export function useCtrlDrag() {
         progressDom.style.pointerEvents = "auto"
     }
 
-    // 添加监控
+    // 添加监控不允许拖动
     const onMonitor = () => {
+        offMonitor()
         notDrag()
         ob = new MutationObserver((records) => {
             // 初始执行不监控
@@ -45,11 +43,14 @@ export function useCtrlDrag() {
         });
     }
 
-    // 移除监控
+    // 移除监控，允许拖动
     const offMonitor = () => {
-        if (ob) ob.disconnect()
+        if (ob) {
+            ob.disconnect()
+            ob = null
+        }
         canDrag()
     }
 
-    return { canDrag, notDrag, onMonitor, offMonitor }
+    return { onMonitor, offMonitor }
 }

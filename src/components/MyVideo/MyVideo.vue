@@ -1,7 +1,5 @@
 <template>
     <div id="xgPlayerWrap"></div>
-    <button @click="notnot">禁用</button>
-    <button @click="cancan">可用</button>
 </template>
 
 <script setup lang="ts">
@@ -10,6 +8,7 @@ import Player from 'xgplayer';
 import 'xgplayer/dist/index.min.css';
 import { conf } from "./conf";
 import { useCtrlDrag } from "@/hook/ctrlDrag";
+import { cloneDeep } from "lodash";
 
 const { onMonitor, offMonitor } = useCtrlDrag()
 
@@ -23,7 +22,7 @@ const props = defineProps({
             return {
                 url: '',
                 poster: '',
-                lastPlayTime: ''
+                lastPlayTime: 0
             }
         }
     }
@@ -38,85 +37,70 @@ watch(() => props.videoInfo.url, () => {
 
 const emit = defineEmits(['play', 'pause', 'savePlayInfo']);
 
-let status = '看完了'
-// let status = '没看完'
-
 onMounted(() => {
     init()
-    setTimeout(() => {
-        if (status == '没看完') {
-            onMonitor()
-        } else {
-            offMonitor()
-        }
-    }, 500);
 })
-onUnmounted(() => { player && player.destroy() })
 
-// 拖动（向前、向后）情况最后考虑
+onUnmounted(() => { 
+    player && player.destroy()
+    timer && clearInterval(timer)
+})
+
+// 保存信息
 const timeInfo = {
     startSecond: 0, // 视频开始播放秒数
     startTimestamp: 0, // 开始播放对应的时间戳
     endSecond: 0, // 视频停止播放秒数
-    endTimestamp: 0 // 停止播放对应的时间戳
+    endTimestamp: 0, // 停止播放对应的时间戳
 }
 
-let tim = 0
-let lastTime = 0;
+// 定时发请求
+let timer: any = null
+let gap = 5000
 
 const init = () => {
     player = new Player({
         ...conf,
         ...props.videoInfo,
     });
+    onMonitor()
     player.on('play', (v: any) => {
         timeInfo.startSecond = getCurrentVideoPlayTime()
         timeInfo.startTimestamp = new Date().getTime()
-        // emit('play', timeInfo)
+        timer = setInterval(() => { savePlayInfo() }, gap)
     })
     player.on('pause', (v: any) => {
-        timeInfo.endSecond = isEnd() ? getVideoDurationTime() : getCurrentVideoPlayTime()
-        timeInfo.endTimestamp = new Date().getTime()
-        // emit('pause', timeInfo)
-        // savePlayInfo()
-        // if (isEnd()) {
-        //     console.log('播放完毕的暂停');
-        // } else {
-        //     console.log('中间暂停');
-        // }
+        savePlayInfo()
+        timer && clearInterval(timer)
     })
-    // player.on('seeking', (v:any)=>{
-    //     if(v.currentTime > tim){
-
-    //     }
-    //     if(v.currentTime < tim){
-
-    //     }
-    //     // video.currentTime = video.seekable.start(0)
-    // })
-
-    player.on('timeupdate', (v: any) => {
-        // if (player.currentTime > lastTime) {
-        //     console.log('向右');
-        // } else if (player.currentTime < lastTime) {
-        //     console.log('向左');
-        // }
-        // lastTime = player.currentTime;
+    player.on('seeked', (v: any) => {
+        // 播放时跳转重置时间，清空定时器，新建定时器（暂停情况不用处理）
+        timer && clearInterval(timer)
+        if (!player.paused) {
+            timeInfo.startSecond = getCurrentVideoPlayTime()
+            timeInfo.startTimestamp = new Date().getTime()
+            timer = setInterval(() => { savePlayInfo() }, gap)
+        }
+        console.log('seeked', getCurrentVideoPlayTime());
     })
-    // player.on('loadedmetadata', (v: any) => {
-    //     console.log('-媒体数据加载好了-', v);
-    // })
-
-
-
-
+    player.on('loadedmetadata', (v: any) => {
+        if (props.videoInfo.lastPlayTime) {
+            player.seek(props.videoInfo.lastPlayTime)
+        }
+    })
 }
 
-
 const savePlayInfo = () => {
-    emit('savePlayInfo', timeInfo)
-    console.log('保存播放信息', timeInfo);
-    // 开始暂停替换
+    const timestamp = new Date().getTime()
+    timeInfo.endSecond = isEnd() ? getVideoDurationTime() : getCurrentVideoPlayTime()
+    timeInfo.endTimestamp = timestamp
+    const info = cloneDeep(timeInfo)
+    // @ts-ignore
+    info.speed = getRate()
+    console.log('保存播放信息', info);
+    emit('savePlayInfo', info)
+    timeInfo.startSecond = timeInfo.endSecond
+    timeInfo.startTimestamp = timestamp
 }
 
 // 是否播放完毕
@@ -128,6 +112,8 @@ const getCurrentVideoPlayTime = () => Math.floor(player.currentTime)
 // 获取当前视频的总时长，如一个视频两分钟即120秒
 const getVideoDurationTime = () => Math.floor(player.duration)
 
+// 获取当前视频的播放速度
+const getRate = () => player.playbackRate
 </script>
 
 <style scoped>

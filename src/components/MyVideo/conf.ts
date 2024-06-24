@@ -19,7 +19,7 @@ export const conf: object = {
     fluid: true, // 是否流式布局（宽高优先于流失布局，默认16:9）注掉上方宽高看效果
     fitVideoSize: 'fixed', // 保持容器宽/高，不做适配，按照容器来
     videoFillMode: 'auto', // 宽高不够自动底色填充（fill拉伸填充等...）
-    seekedStatus: 'play', // 跳转后继续播放
+    seekedStatus: 'auto', // 跳转后继续播放 play 保持原有状态auto
     // 播放器进度条故事点信息数组
     // progressDot: [
     //     {
@@ -43,11 +43,11 @@ export const conf: object = {
      * */
     icons: {}, // 使用默认的icon图标
     i18n: [], // 使用默认的中文
-    // // 自定义一些颜色
+    // 自定义一些颜色
     // commonStyle: {
-    //     progressColor: 'green', // 整个进度条颜色
-    //     playedColor: 'chocolate', // 已播放的进度条颜色
-    //     volumeColor: 'pink', // 音量大小竖向滑块颜色
+        // progressColor: 'green', // 整个进度条颜色
+        // playedColor: '#18489C', // 已播放的进度条颜色
+        // volumeColor: 'pink', // 音量大小竖向滑块颜色
     // },
     controls: true, // 是否使用底部控制栏，默认使用
     miniprogress: true, // 是否使用mini进度条（当底部控制栏隐藏时生效）
@@ -57,8 +57,8 @@ export const conf: object = {
     pip: false, // 使用使用画中画模式，默认不用
     mini: false, // 是否使用小屏幕控件
     cssFullscreen: true, // 是否使用网页样式全屏按钮开关
-    // playbackRate: [0.5, 1, 1.5, 2, 3], //传入倍速可选数组
-    playbackRate: false, //false，禁用倍速播放（即控制栏不显示）
+    playbackRate: [0.5, 1, 1.5, 2, 3], //传入倍速可选数组
+    // playbackRate: false, //false，禁用倍速播放（即控制栏不显示）
     keyShortcut: false, // 是否开启快捷键模式
     /**
      * 交互配置

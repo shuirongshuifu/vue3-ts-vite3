@@ -6,22 +6,12 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-// 引入饿了么组件和样式
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-// 单独引入饿了么图标，并注册
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import { register } from "@/utils/register";
 
 const app = createApp(App)
 
-app.use(ElementPlus, {
-    locale: zhCn,
-})
+register(app)
 
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-}
 app.use(createPinia())
 app.use(router)
 

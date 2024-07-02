@@ -1,0 +1,166 @@
+.vc-calendar-timetable{
+  background: #fff;
+  padding-bottom: 10px;
+  .vc-calendar-timetable-wrap{
+    .vc-calendar-body{
+      .vc-calendar-row{
+        overflow: hidden;
+        .vc-calendar-day{
+          -webkit-tap-highlight-color:transparent;
+          width: 14.285714285714285%;
+          position: relative;
+          float: left;
+          color: #7C86A2;
+          cursor: pointer;
+          padding: 1%;
+          box-sizing: border-box;
+          &:before{
+            content: '';
+            padding-top: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+          }
+          &.selected-range-includes{
+            &:after{
+              content: '';
+              display: block;
+              position: absolute;
+              width: 100%;
+              height: 86%;
+              background: #E8F4FF ;
+              top: 7%;
+              z-index: 1;
+            }
+          }
+          &.selected-range-start{
+            &:after{
+              content: '';
+              display: block;
+              position: absolute;
+              width: 100%;
+              height: 86%;
+              background: #E8F4FF ;
+              top: 7%;
+              z-index: 0;
+              left: 50%;
+            }
+            &.selected-range-not-complete, &.vc-calendar-row-last{
+              &:after{
+                content: none;
+              }
+            }
+          }
+          .vc-calendar-day-container{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding: 1%;
+            z-index: 3;
+          }
+          &.vc-day-selected{
+            &:before{
+              // background: #baf;
+              overflow: hidden;
+              border-radius: 4%;
+            }
+            .vc-calendar-date{
+              // color: #fff;
+              color: #FF6260;
+              font-weight: 600;
+            }
+            &.selected-range-includes{
+              .vc-calendar-date{
+                color: #7C86A2;
+              }
+            }
+          }
+          &.vc-calendar-dayoff{
+            .vc-calendar-date {
+              color: #FF6260;
+            }
+          }
+          .vc-calendar-date{
+            width: 100%;
+            display: block;
+            position: absolute;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+          .vc-calendar-almanac{
+            display: block;
+            position: absolute;
+            bottom: 8%;
+            font-size: 12px;
+            width: 100%;
+            text-align: center;
+            &.vc-calendar-holiday, &.vc-calendar-isTerm{
+              color: #FF6260;
+            }
+          }
+          .vc-calendar-slot-element{
+            // font-size: 12px;
+            // position: absolute;
+            // top: 0;
+          }
+          .vc-calendar-text{
+            font-size: 12px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: block;
+            text-align: center;
+          }
+          &.vc-calendar-disabled{
+            pointer-events: none;
+            .vc-calendar-day-container{
+              .vc-calendar-date, .vc-calendar-almanac{
+                color: #ccc;
+              }
+            }
+            &.vc-calendar-prev-month-day, &.vc-calendar-next-month-day{
+              pointer-events: inherit;
+            }
+          }
+        }
+      }
+      .vc-calendar-rang-head{
+        .vc-calendar-rang-week-box{
+          width: 100%;
+          display: flex;
+          align-items: center;
+          height: 30px;
+          margin-top: 10px;
+          span{
+            flex: 1;
+            text-align: center;
+            color: #6B7897;
+          }
+        }
+        .vc-calendar-rang-year-month-box{
+          background: #fafafa;
+          padding: 10px 0;
+          color: #646464;
+          text-align: center;
+          font-size: 16px;
+        }
+      }
+      .vc-calendar-content{
+        position: relative;
+        .vc-calendar-month-background-text{
+          position: absolute;
+          top: 50%;
+          text-align: center;
+          width: 100%;
+          font-size: 200px;
+          transform: translateY(-50%);
+          font-weight: 900;
+          color: #f4f5f9;
+        }
+      }
+    }
+  }
+}

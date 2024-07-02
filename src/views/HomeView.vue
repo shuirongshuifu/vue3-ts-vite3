@@ -1,6 +1,6 @@
 <template>
   <div class="topLevelWrap">
-    <el-menu v-bind="attrs">
+    <el-menu v-bind="attrs" @open="handleOpen">
       <el-sub-menu :index="item.path" v-for="(item, index) in meunArr" :key="index">
         <template #title>
           <el-icon>
@@ -22,8 +22,7 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import { meunAr } from '@/router/index'
-
-console.log('meunAr', meunAr);
+import { ref } from "vue";
 
 const route = useRoute();
 
@@ -40,8 +39,11 @@ const attrs = {
 
 const meunArr = meunAr
 
+const openKeys = ref<string[]>([]); // 用来存储当前展开的菜单key
+
 // keyPath类型注解，keyPath是数组，数组中的每一项都是字符串
 const handleOpen = (key: string, keyPath: string[]) => {
+  openKeys.value = [key]; // 展开当前项，关闭其他
   // console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {

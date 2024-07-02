@@ -81,6 +81,24 @@ const routes = [
         },
         component: () => import('../views/Second/Ccc.vue'),
       },
+      {
+        path: '/ddd',
+        name: 'Ddd',
+        meta: {
+          menu: 'Second',
+          title: '日历改造2'
+        },
+        component: () => import('../views/Second/Ddd.vue'),
+      },
+      {
+        path: '/eee',
+        name: 'Eee',
+        meta: {
+          menu: 'Second',
+          title: '日历改造3'
+        },
+        component: () => import('../views/Second/Eee.vue'),
+      },
     ]
   },
 ]

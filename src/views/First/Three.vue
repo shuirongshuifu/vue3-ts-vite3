@@ -1,6 +1,6 @@
 <template>
   <div class="demo-date-picker">
-    <MyTable height="360" :columns="columns" :pageInfo="pageInfo" :data="data" @selection-change="fn">
+    <MyTable height="540" :columns="columns" :pageInfo="pageInfo" :data="data" @selection-change="fn">
       <template #link:default="scope">
         <a :href="scope.row.link" target="_blank"> 点击跳跳跳： {{ scope.row.name }}</a>
       </template>

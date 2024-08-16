@@ -225,15 +225,15 @@ const conf = reactive([
          * 接口函数，需要传递相应的参数，使用立即执行函数额外传参
          * 注意的下方语法写法，选择周六周日对应汽车小吃
          * */
-        api: null
-        // api: 
-        // (
-        //   function (params) {
-        //     return function () {
-        //       return getSelectDataNeedParams(params)
-        //     }
-        //   }
-        // )('car')
+        // api: null
+        api: 
+        (
+          function (params) {
+            return function () {
+              return getSelectDataNeedParams(params)
+            }
+          }
+        )('car')
       }
     },
   },

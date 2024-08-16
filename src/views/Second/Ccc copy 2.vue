@@ -15,41 +15,45 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 const scoreArr = ref([
     {
-        "qid": 1111111,
+        "qid": 1124663333216773,
         "qNo": 33,
         "score": 2,
         "getScore": 1
     },
     {
-        "qid": 2222222,
+        "qid": 1124663333224966,
         "qNo": 34,
         "score": 2,
         "getScore": 2
     },
     {
-        "qid": 3333333,
+        "qid": 1124663333233158,
         "qNo": 35,
         "score": 2,
         "getScore": 2
     },
     {
-        "qid": 4444444,
+        "qid": 1124663333241350,
         "qNo": 36,
         "score": 2,
         "getScore": 1.5
     },
+    {
+        "qid": 1124663333249542,
+        "qNo": 37,
+        "score": 2,
+        "getScore": 2
+    }
 ])
 
 // 数组收集多个示例引用
 const inputNumRefs = ref([])
 
-console.log('inputNumRefs', inputNumRefs);
-
 // 第一个获取焦点的索引
 let starIndex = 0
 
 // 调用数字输入框实例去获取焦点
-const setFocus = (starIndex: number) => {
+const setFirstFocus = (starIndex: number) => {
     inputNumRefs.value[starIndex].focus()
 }
 
@@ -61,7 +65,7 @@ const handleKeyDown = (event) => {
         // 若是跳转到最后一项，则回到第一项
         if (starIndex == scoreArr.value.length) starIndex = 0
         // 再执行，去获取焦点
-        setFocus(starIndex)
+        setFirstFocus(starIndex)
     }
 };
 
@@ -69,7 +73,7 @@ const handleKeyDown = (event) => {
 onMounted(() => {
     window.addEventListener('keydown', handleKeyDown);
     // 默认让第一个获取焦点
-    setFocus(0)
+    setFirstFocus(0)
 });
 
 // 组件卸载移除事件监听

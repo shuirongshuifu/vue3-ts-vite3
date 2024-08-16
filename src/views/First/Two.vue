@@ -187,5 +187,6 @@ li {
 
 button {
   margin: 0 6px;
+  color: #fffcfc;
 }
 </style>

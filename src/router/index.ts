@@ -77,7 +77,7 @@ const routes = [
         name: 'Ccc',
         meta: {
           menu: 'Second',
-          title: '日历改造'
+          title: '数字输入框跳转'
         },
         component: () => import('../views/Second/Ccc.vue'),
       },
@@ -98,6 +98,24 @@ const routes = [
           title: '日历改造3'
         },
         component: () => import('../views/Second/Eee.vue'),
+      },
+      {
+        path: '/fff',
+        name: 'Fff',
+        meta: {
+          menu: 'Second',
+          title: '组件继承'
+        },
+        component: () => import('../views/Second/Fff.vue'),
+      },
+      {
+        path: '/ggg',
+        name: 'Ggg',
+        meta: {
+          menu: 'Second',
+          title: '树表格勾选'
+        },
+        component: () => import('../views/Second/Ggg.vue'),
       },
     ]
   },

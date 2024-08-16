@@ -16,6 +16,12 @@ import { ref, reactive, onMounted } from "vue";
 import MyTable from "@/components/MyTable/MyTable.vue";
 import { getTableData, getTotalCount } from "@/api/modules/example";
 
+let fnObj = {
+  aaa: ()=>{ },
+  bbb: ()=>{ },
+}
+fnObj.aaa()
+
 onMounted(() => {
   getData()
 })

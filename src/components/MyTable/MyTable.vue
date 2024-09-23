@@ -1,7 +1,10 @@
 <template>
   <div class="tablePageWrap">
     <el-table v-bind="mergeAttrs">
-      <SelfColumns v-for="column in mergeSlotsColumns" :column="column"> </SelfColumns>
+      <SelfColumns v-for="column in mergeSlotsColumns" :column="column" />
+      <template v-slot:[slot] v-for="(_, slot) in tableSlots">
+        <slot :name="slot"></slot>
+      </template>
     </el-table>
     <el-pagination
       v-if="!pageInfo.hidden"
@@ -9,7 +12,7 @@
       v-model:current-page="pageInfo.offset"
       v-model:page-size="pageInfo.limit"
       :total="pageInfo.total"
-      :page-sizes="[20, 50, 100, 200]"
+      :page-sizes="[10, 20, 50, 100, 200]"
       layout="total, sizes, prev, pager, next, jumper"
       :background="true"
       @size-change="handleSizeChange"
@@ -57,10 +60,14 @@ const props = defineProps({
 
 // 合并插槽
 const slots = defineSlots();
+
+const tableSlots = ref<Record<string, any>>({});
+
 const mergeSlotsColumns = computed(() => {
   const cColumns = cloneDeep(props.columns);
   cColumns.forEach((column) => {
     for (const key in slots) {
+      // 表格列的插槽
       if (key.includes(column.prop)) {
         if (key.includes("default")) {
           column["defaultSlot"] = slots[key];
@@ -69,6 +76,10 @@ const mergeSlotsColumns = computed(() => {
           column["headerSlot"] = slots[key];
         }
         Object.assign(column, defaultColumn);
+      }
+      // 表格表体的插槽
+      else {
+        tableSlots.value[key] = slots[key];
       }
     }
   });

@@ -55,6 +55,15 @@ const routes = [
         component: () => import('../views/First/Five.vue'),
       },
       {
+        path: '/six',
+        name: 'Six',
+        meta: {
+          menu: 'First',
+          title: '表格组件封装4'
+        },
+        component: () => import('../views/First/Six.vue'),
+      },
+      {
         path: '/aaa',
         name: 'Aaa',
         meta: {

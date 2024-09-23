@@ -50,6 +50,7 @@ const conf = reactive([
   {
     type: 'MyInput',
     label: '姓名',
+    tip: '姓名即为name',
     span: 24,
     attr: {
       prop: 'ming',

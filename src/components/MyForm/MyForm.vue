@@ -1,6 +1,6 @@
 <template>
-  <el-form ref="myFormRef" :model="modelValue" v-bind="mergeAttr" @keyup.enter="submit(myFormRef)">
-    <el-row>
+  <el-form ref="myFormRef" :model="modelValue" v-bind="mergeAttr" @submit.prevent @keydown.enter="submit(myFormRef)">
+    <el-row :gutter="24">
       <template v-for="(item, index) in conf">
         <el-col v-if="!item.hidden" :span="item.span" class="setElCol">
           <el-form-item style="width: 100%;" :label="item.label" :prop="item.attr.prop">
@@ -9,6 +9,14 @@
                 <slot :name="slot"></slot>
               </template>
             </component>
+            <template v-if="item.tip" #label="{ label }">
+              <span>{{ label }}</span>
+              <el-tooltip effect="dark" :content="item.tip" placement="top">
+                <el-icon>
+                  <QuestionFilled />
+                </el-icon>
+              </el-tooltip>
+            </template>
           </el-form-item>
         </el-col>
       </template>
@@ -33,12 +41,13 @@ import MyRadio from "./components/MyRadio/MyRadio.vue";
 import MyRate from "./components/MyRate/MyRate.vue";
 import MySelect from "./components/MySelect/MySelect.vue";
 import MyDate from "./components/MyDate/MyDate.vue";
+import MyAlert from "./components/MyAlert/MyAlert.vue";
 
 import type { FormInstance, FormRules } from 'element-plus'
 
 defineOptions({
   name: 'MyForm',
-  components: { MyInput, MyInputNumber, MyRadio, MyRate, MySelect, MyDate }
+  components: { MyInput, MyInputNumber, MyRadio, MyRate, MySelect, MyDate, MyAlert }
 })
 
 const slots = defineSlots();
@@ -145,13 +154,13 @@ const mergeAttr = computed(() => {
 // 合并按钮
 const mergeBtns = computed(() => {
   const defaultBtns: ConfItem = {
-    cancel: {
-      name: '取消',
-      icon: 'CircleClose',
-      type: "info",
-      plain: true,
-      hidden: false
-    },
+    // cancel: { // 弹框取消功能由dialog承载
+    //   name: '取消',
+    //   icon: 'CircleClose',
+    //   type: "info",
+    //   plain: true,
+    //   hidden: false
+    // },
     reset: {
       name: '重置',
       icon: 'RefreshRight',

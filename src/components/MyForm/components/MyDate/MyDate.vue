@@ -1,5 +1,5 @@
 <template>
-    <el-date-picker v-model="form[attr.prop]" v-bind="mergeAttr" >
+    <el-date-picker style="width: 100%;" v-model="form[attr.prop]" v-bind="mergeAttr" >
     </el-date-picker>
 </template>
 

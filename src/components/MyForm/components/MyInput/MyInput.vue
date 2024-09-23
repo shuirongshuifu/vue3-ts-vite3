@@ -32,7 +32,8 @@ const props = defineProps({
 const mergeAttr = computed(() => {
     const defaultAttr = {
         clearable: true,
-        size: 'default'
+        size: 'default',
+        placeholder: '请输入'
     }
     return { ...defaultAttr, ...props.attr }
 })

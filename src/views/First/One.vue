@@ -24,6 +24,15 @@ import { randomColor, getSelectData, getSelectData2, getSelectDataNeedParams } f
 
 const conf = reactive([
   {
+    type: 'MyAlert',
+    span: 24,
+    attr: {
+        title: "MyAlert...",
+        type: "info",
+        closable: false
+    },
+  },
+  {
     type: 'MyInput', // 文本框类型
     label: '姓名', // 表单名
     span: 24, // 控制表单项占据单行空间份数宽度

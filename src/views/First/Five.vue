@@ -1,15 +1,20 @@
 <template>
-  <div class="demo-date-picker">
+  <div class="demo">
     <h2>展开行</h2>
     <MyTable height="240" :columns="columns" :data="data" :pageInfo="{ hidden: true }">
       <!-- 展开行的内容 -->
       <template #expand:default="scope">
         <h3 style="margin-left: 12px;">{{ scope.row.name }}</h3>
       </template>
+      <template #score:default="scope">
+        <span>{{ scope.row.score }} 分 </span>
+      </template>
+      <template #score:header="scope">
+        <span>头部插槽形式渲染头部</span>
+      </template>
     </MyTable>
     <h2>树形数据与懒加载</h2>
-    <!-- default-expand-all  -->
-    <MyTable height="240" row-key="id" :columns="columns2" :data="data2" :pageInfo="{ hidden: true }" />
+    <MyTable default-expand-all height="360" row-key="id" :columns="columns2" :data="data2" :pageInfo="{ hidden: true }" />
   </div>
 </template>
 
@@ -45,10 +50,15 @@ const columns: any = [
   {
     prop: 'link',
     label: "外链",
-    width: "210",
+    width: "240",
     renderHeader: (data: any) => {
-      return 'renderHeader函数的方式'
+      return 'renderHeader函数的渲染头部'
     }
+  },
+  {
+    prop: 'score',
+    label: "得分",
+    width: "200",
   },
 ]
 
@@ -58,21 +68,19 @@ const data = [
     name: '百度',
     age: 66.666,
     link: 'https://www.baidu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
+    score: 133
   },
   {
-    date: '2016-05-02',
     name: '知乎',
     age: 77.777,
     link: 'https://www.zhihu.com/',
-    address: 'No. 189, Grove St, Los Angeles',
+    score: 144
   },
   {
-    date: '2016-05-03',
     name: '头条',
     age: 88.888,
     link: 'https://www.toutiao.com/',
-    address: 'No. 189, Grove St, Los Angeles',
+    score: 155
   },
 ]
 

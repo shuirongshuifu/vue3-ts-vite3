@@ -1,5 +1,5 @@
 <template>
-    <el-select @change="(params: string | number) => {
+    <el-select style="width: 100%;" @change="(params: string | number) => {
         evFn(params, 'change')
     }" v-model="form[attr.prop]" v-bind="mergeAttr">
         <template v-slot:[slotName.split(':')[1]] v-for="(_, slotName) in filterSlots">

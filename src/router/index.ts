@@ -64,6 +64,24 @@ const routes = [
         component: () => import('../views/First/Six.vue'),
       },
       {
+        path: '/seven',
+        name: 'Seven',
+        meta: {
+          menu: 'First',
+          title: '表格组件封装5'
+        },
+        component: () => import('../views/First/Seven.vue'),
+      },
+      {
+        path: '/eight',
+        name: 'Eight',
+        meta: {
+          menu: 'First',
+          title: '表格组件封装6'
+        },
+        component: () => import('../views/First/Eight.vue'),
+      },
+      {
         path: '/aaa',
         name: 'Aaa',
         meta: {

@@ -12,10 +12,19 @@ const noChildren = (column: any) => {
     return newColumn
 }
 
-
 const SelfColumns = (params: any, ctx: any): any => {
-    const { defaultSlot, headerSlot } = params.column
-    const Vnode = { default: defaultSlot || null, header: headerSlot || null }
+    // const { defaultSlot, headerSlot } = params.column
+    // const Vnode = { default: defaultSlot || null, header: headerSlot || null }
+
+    let Vnode = {}
+    if (params.column.children) {
+        // @ts-ignore
+        Vnode['default'] = () => [
+            h(ElTableColumn, params.column.children[0]), 
+            h(ElTableColumn, params.column.children[1])
+        ];
+    }
+
     return h(ElTableColumn, noChildren(params.column), Vnode);
 };
 

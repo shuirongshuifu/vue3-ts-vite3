@@ -82,6 +82,15 @@ const routes = [
         component: () => import('../views/First/Eight.vue'),
       },
       {
+        path: '/nine',
+        name: 'Nine',
+        meta: {
+          menu: 'First',
+          title: '表单表格'
+        },
+        component: () => import('../views/First/Nine.vue'),
+      },
+      {
         path: '/aaa',
         name: 'Aaa',
         meta: {
